@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Registration_number</title>
+	<link rel="stylesheet" href="registration_number.css">
+</head>
+
+<body>
+	<div class="container">
+		<div>
+			<form action="/registration" method="POST">
+				<h1>Registration numbers</h1>
+
+				<div class="message">
+
+				</div>
+
+
+				<div>
+					<input type="text" class="regNumberEntered" name="regNumbers"
+						placeholder="enter a registration number">
+
+				</div>
+				<div>
+					<button type="submit" class="addRegNumber btn blue">Add reg number</button>
+				</div>
+
+
+
+				<div class="filter">
+					<strong>Filter by town</strong>
+					<div class='filterTown'>
+
+						<input type="radio" name="town" class="town" value="">Show all
+						<input type="radio" name="town" class="town" value="CY">Bellville
+						<input type="radio" name="town" class="town" value="CJ">Paarl
+						<input type="radio" name="town" class="town" value="CA"> Cape Town
+					</div>
+				</div>
+				<hr>
+			</form>
+
+			<a href="/deleteDb">
+				<button class="btn" >reset</button>
+			</a>
+
+
+			<div>
+				<ul>
+					{{#each regNumber}}
+					<li class="regNumber">{{this.reg_number}}</li>
+					{{/each}}
+				</ul>
+
+
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>
