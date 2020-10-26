@@ -56,6 +56,15 @@ app.use(session({
       registrations: await regNo.getList()
     });
   });
+
+  app.get("/filer", async function (req, res) {
+    res.render('index', {
+      registrations: await regNo.regFilter(town),
+      towns: await regNo.getList()
+
+    });
+  });
+
   
   app.get("/deleteDb", async function (req, res) {
     await regNo.reset();
@@ -68,11 +77,14 @@ app.post("/registration", async function(req, res) {
     const regN = req.body.regNumbers;
     console.log(regN + "dfghjkdfghjkl;")
     await regNo.addRegNumber(regN);
+    // await regNo.regFilter();
     const regNos = await regNo.getList();
+
 
 console.log(regNos)
     res.render('index', {
-        regNumber: regNos
+        regNumber: regNos,
+        
     });
 
 });

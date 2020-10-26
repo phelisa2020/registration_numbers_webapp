@@ -28,7 +28,7 @@ module.exports = function regFactory(pool) {
         return list.rows;
     }
     async function regFilter (town) {
-        if (town === 'all' || town === '' || town === undefined) {
+        if (town === 'all' || town === '') {
             let list = await pool.query('select reg_number from registrations');
             return list.rows;
         } else {
