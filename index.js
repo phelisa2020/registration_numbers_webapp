@@ -5,12 +5,9 @@ const flash = require('express-flash');
 const session = require('express-session');
 const regFactory = require("./registration");
 
-
 const pg = require("pg");
 const Pool = pg.Pool;
 
-
-// should we use a SSL connection
 let useSSL = false;
 let local = process.env.LOCAL || false;
 if (process.env.DATABASE_URL && !local) {
@@ -66,8 +63,6 @@ app.use(session({
     });
   });
  
-
-  
   app.get("/deleteDb", async function (req, res) {
     await regNo.reset();
     res.redirect('/');
@@ -79,11 +74,9 @@ app.post("/registration", async function(req, res) {
     const regN = req.body.regNumbers;
    
     await regNo.addRegNumber(regN);
-    // await regNo.regFilter();
+   
     const regNos = await regNo.getList();
 
-
-console.log(regNos)
     res.render('index', {
         regNumber: regNos,
         
@@ -91,8 +84,6 @@ console.log(regNos)
 
 });
   
-
-
 
 const PORT = process.env.PORT || 3007;
 app.listen(PORT, function () {

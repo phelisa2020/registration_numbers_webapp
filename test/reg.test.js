@@ -13,20 +13,20 @@ describe("The Registration function", function () {
 
     beforeEach(async function () {
         await pool.query(`delete from registrations`)
-       
+
     });
 
 
     it("should be able to add registration to the database", async function () {
-       
+
         var regNo = registrations(pool);
 
-        var number = 'CA 1234'
+        var number = 'CY 1234'
 
         await regNo.addRegNumber(number)
 
 
-        assert.deepStrictEqual([{ reg_number: 'CA 1234' }], await regNo.getList());
+        assert.deepStrictEqual([{ reg_number: 'CY 1234' }], await regNo.getList());
     });
 
     it("should be able to add multiple registrations to the database", async function () {
@@ -50,7 +50,7 @@ describe("The Registration function", function () {
         await regNo.addRegNumber("CJ 12345")
         await regNo.addRegNumber("CA 12345")
 
-        assert.deepStrictEqual([{ reg_number: "CA 1234" }],[{ reg_number: "CA 1234" }],[{ reg_number: "CA 12345" }], await regNo.regFilter('1'));
+        assert.deepStrictEqual([{ reg_number: "CA 1234" }], [{ reg_number: "CA 1234" }], [{ reg_number: "CA 12345" }], await regNo.regFilter('1'));
     });
 
     it("should be able to filter for Paarl ", async function () {
@@ -59,7 +59,7 @@ describe("The Registration function", function () {
         await regNo.addRegNumber("CJ 12345")
         await regNo.addRegNumber("CA 12345")
 
-        assert.deepStrictEqual([{ reg_number: "CJ 123456" }],[{ reg_number: "CJ 123456" }],[{ reg_number: "CJ 12345" }], await regNo.regFilter('2'));
+        assert.deepStrictEqual([{ reg_number: "CJ 123456" }], [{ reg_number: "CJ 123456" }], [{ reg_number: "CJ 12345" }], await regNo.regFilter('2'));
     });
 
     it("should be able to filter for Bellville ", async function () {
@@ -68,13 +68,12 @@ describe("The Registration function", function () {
         await regNo.addRegNumber("CJ 12345")
         await regNo.addRegNumber("CY 12345")
 
-        assert.deepStrictEqual([{ reg_number: "CY 2345" }],[{ reg_number: "CY 2345" }], [{ reg_number: "CY 12345" }], await regNo.regFilter('3'));
+        assert.deepStrictEqual([{ reg_number: "CY 2345" }], [{ reg_number: "CY 2345" }], [{ reg_number: "CY 12345" }], await regNo.regFilter('3'));
     });
 
 
     it("should return all the reg numbers", async function () {
         var regNo = registrations(pool);
-
         const number = "CA 1234";
         const number2 = "CJ 12345";
         const number3 = "CY 123456";
@@ -87,19 +86,3 @@ describe("The Registration function", function () {
         assert.deepStrictEqual([{ reg_number: "CJ 12345" }], [{ reg_number: "CJ 12345" }], [{ reg_number: "CY 123456" }], await regNo.getList());
     });
 
-
-//     it("should be able to reset the dataBase", async function () {
-//         var regNo = registrations(pool);
-
-//         await reg.addReg('CA 12345')
-//         await reg.addReg('CJ 1234')
-
-//         const allReg = await reg.allReg()
-
-//         assert.deepEqual([], await reg.clear());
-//     });
-
-//     after( async function () {
-//         pool.end();
-//     })
-});
