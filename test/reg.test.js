@@ -21,12 +21,12 @@ describe("The Registration function", function () {
 
         var regNo = registrations(pool);
 
-        var number = 'CY 1234'
+        var number = 'CA 1234'
 
         await regNo.addRegNumber(number)
 
 
-        assert.deepStrictEqual([{ reg_number: 'CY 1234' }], await regNo.getList());
+        assert.deepStrictEqual([{ reg_number: 'CA 1234' }], await regNo.getList());
     });
 
     it("should be able to add multiple registrations to the database", async function () {
@@ -86,3 +86,4 @@ describe("The Registration function", function () {
         assert.deepStrictEqual([{ reg_number: "CJ 12345" }], [{ reg_number: "CJ 12345" }], [{ reg_number: "CY 123456" }], await regNo.getList());
     });
 
+})
