@@ -57,13 +57,15 @@ app.use(session({
     });
   });
 
-  app.get("/filer", async function (req, res) {
+  app.get("/registration", async function (req, res) {
+    const town = req.query.town
+    console.log(town );
     res.render('index', {
-      registrations: await regNo.regFilter(town),
-      towns: await regNo.getList()
-
+      regNumber: await regNo.regFilter(town),
+     
     });
   });
+ 
 
   
   app.get("/deleteDb", async function (req, res) {
@@ -75,7 +77,7 @@ app.use(session({
 app.post("/registration", async function(req, res) {
 
     const regN = req.body.regNumbers;
-    console.log(regN + "dfghjkdfghjkl;")
+   
     await regNo.addRegNumber(regN);
     // await regNo.regFilter();
     const regNos = await regNo.getList();
@@ -92,7 +94,7 @@ console.log(regNos)
 
 
 
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3007;
 app.listen(PORT, function () {
   console.log('App started at port:', PORT);
 })

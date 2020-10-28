@@ -25,34 +25,28 @@
 
 				</div>
 				<div>
-					<button type="submit" class="addRegNumber btn blue">Add reg number</button>
+					<button type="submit" class="addRegNumber">Add reg number</button>
 				</div>
 
 </form>
-<form action="/filter" method="POST">
+<form action="/registration" method="GET">
 				<div class="filter">
 					<strong>Filter by town</strong>
-					<div class='filterTown'>
+					<div class='town'>
+						
 
-						<input type="radio" name="town" class="town" value="">Show all
-						<input type="radio" name="town" class="town" value="CY">Bellville
-						<input type="radio" name="town" class="town" value="CJ">Paarl
-						<input type="radio" name="town" class="town" value="CA"> Cape Town
+						<input type="radio" name="town" class="town" value="all">Show all
+						<input type="radio" name="town" class="town" value="1">Bellville
+						<input type="radio" name="town" class="town" value="2">Paarl
+						<input type="radio" name="town" class="town" value="3"> Cape Town
 						 <div> <button type="submit" class="filterRegNumber">filter</button></div>
 
 					</div>
 				</div>
-				</form>
+				
 				
 				<hr>
-			
-
-			<a href="/deleteDb">
-				<button class="btn" >reset</button>
-			</a>
-
-
-			<div>
+					<div>
 				<ul>
 					{{#each regNumber}}
 					<li class="regNumber">{{this.reg_number}}</li>
@@ -61,6 +55,14 @@
 
 
 			</div>
+			
+</form>
+			<a href="/deleteDb">
+				<button class="btn" >reset</button>
+			</a>
+
+
+		
 		</div>
 
 	</div>

@@ -2,6 +2,7 @@ module.exports = function regFactory(pool) {
 
     async function addRegNumber(plate) {
        
+       
         if (!plate == "") {
             plate = plate.toUpperCase();
 
@@ -28,7 +29,8 @@ module.exports = function regFactory(pool) {
         return list.rows;
     }
     async function regFilter (town) {
-        if (town === 'all' || town === '') {
+        // console.log(town)
+        if (town === 'all') {
             let list = await pool.query('select reg_number from registrations');
             return list.rows;
         } else {
