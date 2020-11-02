@@ -56,6 +56,7 @@ app.get("/", async function (req, res) {
 
 app.get("/registration", async function (req, res) {
   const town = req.query.town
+  
   let errors = ""
   if (!town) {
     errors = 'Please select a town'
@@ -86,13 +87,14 @@ app.get("/deleteDb", async function (req, res) {
 app.post("/registration", async function (req, res) {
 
   let regN = req.body.regNumbers;
+  let plate = regN.toUpperCase()
   let errors = ""
 
-  if (!regN) {
+  if (!plate) {
     errors = 'Please enter a reg number'
   }
 
-  else if (!(/C[JYA JYA] \d{3,6}$/.test(regN))) {
+  else if (!(/C[AYJ]\s\d{3,6}\D\d{3,9}|C[AYJ]\s\d{3,6}/gi.test(plate))) {
     errors = 'invalid reg number'
   }
 
