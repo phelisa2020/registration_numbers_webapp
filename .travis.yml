@@ -7,7 +7,7 @@ node_js:
   - 12
 
 before_script:
-  - psql -c 'create database  my_registration_test;' -U postgres
+  - psql -c 'create database my_registration_test;' -U postgres
   - psql -U postgres -d my_registration_test -a -f tables.sql
 
 services:

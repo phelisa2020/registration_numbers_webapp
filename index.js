@@ -56,11 +56,23 @@ app.get("/", async function (req, res) {
 
 app.get("/registration", async function (req, res) {
   const town = req.query.town
-  console.log(town);
+  let errors = ""
+  if (!town) {
+    errors = 'Please select a town'
+  }
+
+  if (errors) {
+    req.flash("error", errors),
+      res.render("index")
+  }
+ 
+  else {
+  
   res.render('index', {
     regNumber: await regNo.regFilter(town),
 
   });
+  }
 });
 
 app.get("/deleteDb", async function (req, res) {
@@ -75,8 +87,9 @@ app.post("/registration", async function (req, res) {
   let errors = ""
 
   if (!regN) {
-    errors = 'Please select a town'
+    errors = 'Please enter a reg number'
   }
+  
   else if(!(/C[ayz AYZ] \d{3,6}$/.test(regN))){
     errors='invalid reg number'
   }
@@ -100,7 +113,7 @@ app.post("/registration", async function (req, res) {
 })
 
 
-const PORT = process.env.PORT || 3007;
+const PORT = process.env.PORT || 3008;
 app.listen(PORT, function () {
   console.log('App started at port:', PORT);
 })
