@@ -77,6 +77,9 @@ app.post("/registration", async function (req, res) {
   if (!regN) {
     errors = 'Please select a town'
   }
+  else if(!(/C[ayz AYZ] \d{3,6}$/.test(regN))){
+    errors='invalid reg number'
+  }
 
   else {
     await regNo.addRegNumber(regN);

@@ -5,12 +5,13 @@ module.exports = function regFactory(pool) {
         plate = plate.toUpperCase();
 
         const regPlate = plate.substring(0, 2).trim();
-        const townsId = await pool.query(`select id from towns where starts_with=$1`, [regPlate]);
-        const idReg = townsId.rows[0].id;
+        const townsId = await pool.query(`select id from towns`);
+        const idReg = townsId.rows[0].id
 
         if (idReg > 0) {
-            regExist = await pool.query(`select * from registrations where reg_number = $1`, [plate])
+            var regExist = await pool.query(`select * from registrations where reg_number = $1`, [plate])
         }
+       
 
         if (regExist.rowCount === 0) {
             await pool.query(`insert into registrations (reg_number, town_id) values ($1, $2)`, [plate, idReg])

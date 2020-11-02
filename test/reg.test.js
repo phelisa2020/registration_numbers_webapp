@@ -17,7 +17,7 @@ describe("The Registration function", function () {
     });
 
    
-    it("Should show be able to add 1 registration number in the database.", async function () {
+    it("Should show be able to add 1 registrations in the database.", async function () {
 
         var regNo = registrations(pool);
 
@@ -29,7 +29,7 @@ describe("The Registration function", function () {
     });
 
   
-    it("Should be able to add 3 registration numbers in the database.", async function () {
+    it("Should be able to add 3 registrations in the database.", async function () {
         var regNo = registrations(pool);
 
         await regNo.addRegNumber("CA 123-123")
@@ -45,7 +45,7 @@ describe("The Registration function", function () {
         ])
     });
 
-    it("Should be able to add 2 registration numbers in the database without repeating the same reg number", async function () {
+    it("Should be able to add 2 registrations in the database without repeating the same reg number", async function () {
         var regNo = registrations(pool);
 
         await regNo.addRegNumber("CA 123-456")
@@ -60,7 +60,10 @@ describe("The Registration function", function () {
             { reg_number: 'CJ 123-457' },
            
         ])
-    });  
+    });
+
+
+  
    
 
 })
