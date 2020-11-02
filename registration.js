@@ -27,7 +27,7 @@ module.exports = function regFactory(pool) {
     }
     async function regFilter(town) {
         // console.log(town)
-        if (town === 'all' || town === "") {
+        if (town === 'all') {
             let list = await pool.query('select reg_number from registrations');
             return list.rows;
         } else {

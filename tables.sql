@@ -15,9 +15,9 @@ create table registrations
 
 
 
---  insert into towns(town_name, starts_with) values('Cape Town','CA');
---  insert into towns(town_name, starts_with) values('Bellville', 'CY');
---  insert into towns(town_name, starts_with) values('Paarl', 'CJ');
+ insert into towns(town_name, starts_with) values('Cape Town','CA');
+ insert into towns(town_name, starts_with) values('Bellville', 'CY');
+ insert into towns(town_name, starts_with) values('Paarl', 'CJ');
 
 
 
