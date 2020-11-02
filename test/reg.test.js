@@ -9,6 +9,7 @@ const pool = new Pool({
 });
 
 describe("The Registration function", function () {
+    var regNo = registrations(pool);
 
 
     beforeEach(async function () {
