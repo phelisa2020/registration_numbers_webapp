@@ -12,4 +12,3 @@ before_script:
 
 services:
   - postgresql
-  
