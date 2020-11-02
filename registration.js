@@ -5,7 +5,7 @@ module.exports = function regFactory(pool) {
         plate = plate.toUpperCase();
 
         const regPlate = plate.substring(0, 2).trim();
-        const townsId = await pool.query(`select id from towns`);
+        const townsId = await pool.query(`select id from towns where starts_with=$1`, [regPlate]);
         const idReg = townsId.rows[0].id
 
         if (idReg > 0) {

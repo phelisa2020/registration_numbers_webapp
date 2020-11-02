@@ -17,11 +17,11 @@ describe("The Registration function", function () {
     });
 
    
-    it("Should show be able to add 1 registrations in the database.", async function () {
+    it("Should show be able to add 1 registration numbers in the database.", async function () {
 
         var regNo = registrations(pool);
 
-        await regNo.addRegNumber('CJ 123-123')
+        await regNo.addRegNumber('CJ 123-123', 2)
 
         const list = await regNo.getList()
 
@@ -29,12 +29,12 @@ describe("The Registration function", function () {
     });
 
   
-    it("Should be able to add 3 registrations in the database.", async function () {
+    it("Should be able to add 3 registration numbers in the database.", async function () {
         var regNo = registrations(pool);
 
-        await regNo.addRegNumber("CA 123-123")
-        await regNo.addRegNumber("CJ 123-124")
-        await regNo.addRegNumber("CY 123-125")
+        await regNo.addRegNumber("CA 123-123", 3)
+        await regNo.addRegNumber("CJ 123-124", 2)
+        await regNo.addRegNumber("CY 123-125", 2)
 
         const list = await regNo.getList()
 
@@ -45,18 +45,18 @@ describe("The Registration function", function () {
         ])
     });
 
-    it("Should be able to add 2 registrations in the database without repeating the same reg number", async function () {
+    it("Should be able to add 2 registration numbers in the database without repeating the same reg number", async function () {
         var regNo = registrations(pool);
 
-        await regNo.addRegNumber("CA 123-456")
-        await regNo.addRegNumber("CJ 123-457")
-        await regNo.addRegNumber("CJ 123-457")
-        await regNo.addRegNumber("CJ 123-457")
+        await regNo.addRegNumber("CA 123-456", 3)
+        await regNo.addRegNumber("CJ 123-457", 2)
+        await regNo.addRegNumber("CJ 123-457", 2)
+        await regNo.addRegNumber("CJ 123-457", 2)
 
         const list = await regNo.getList()
 
         assert.deepStrictEqual(list, [
-            { reg_number: 'CA 123-456' },
+            { reg_number: 'CA 123-456'  },
             { reg_number: 'CJ 123-457' },
            
         ])
