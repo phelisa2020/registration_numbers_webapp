@@ -56,43 +56,45 @@ app.get("/", async function (req, res) {
 
 app.get("/registration", async function (req, res) {
   const town = req.query.town
-  let errors = ""
-  if (!town) {
-    errors = 'Please select a town'
-  }
+  // let errors = ""
+  // if (!town) {
+  //   errors = 'Please select a town'
+  // }
 
-  if (errors) {
-    req.flash("error", errors),
-      res.render("index")
-  }
+  // if (errors) {
+  //   req.flash("error", errors),
+  //     res.render("index")
+  // }
  
-  else {
+  // else {
   
   res.render('index', {
     regNumber: await regNo.regFilter(town),
 
   });
-  }
+  // }
 });
 
 app.get("/deleteDb", async function (req, res) {
+  try{
   await regNo.reset();
+  } catch (err) { }
   res.redirect('/');
 });
 
 
 app.post("/registration", async function (req, res) {
-
-  const regN = req.body.regNumbers;
+  
+  let regN = req.body.regNumbers;
   let errors = ""
-
+  
   if (!regN) {
     errors = 'Please enter a reg number'
   }
   
-  else if(!(/C[ayz AYZ] \d{3,6}$/.test(regN))){
-    errors='invalid reg number'
-  }
+   else if (!(/C[AYJ AYJ] \d{3,6}$/.test(regN))){
+     errors='invalid reg number'
+   }
 
   else {
     await regNo.addRegNumber(regN);
@@ -103,17 +105,17 @@ app.post("/registration", async function (req, res) {
   }
 
   else {
-    const regNos = await regNo.getList()
-
+    
     res.render('index', {
-      regNumber: regNos,
+      regNumber: await regNo.getList()
+
 
     });
   }
 })
 
 
-const PORT = process.env.PORT || 3008;
+const PORT = process.env.PORT || 3009;
 app.listen(PORT, function () {
   console.log('App started at port:', PORT);
 })
