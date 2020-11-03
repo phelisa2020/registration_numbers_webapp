@@ -117,7 +117,7 @@ app.post("/registration", async function (req, res) {
 })
 
 
-const PORT = process.env.PORT || 3009;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
   console.log('App started at port:', PORT);
 })
