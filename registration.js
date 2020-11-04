@@ -7,17 +7,24 @@ module.exports = function regFactory(pool) {
         const regPlate = plate.substring(0, 2).trim();
         const townsId = await pool.query(`select id from towns where starts_with=$1`, [regPlate]);
         const idReg = townsId.rows[0].id
-
+        var regExist;
         if (idReg > 0) {
-            var regExist = await pool.query(`select * from registrations where reg_number = $1`, [plate])
+             regExist = await pool.query(`select * from registrations where reg_number = $1`, [plate])
         }
-       
-
-        if (regExist.rowCount === 0) {
+        if (regExist.rowCount < 1) {
             await pool.query(`insert into registrations (reg_number, town_id) values ($1, $2)`, [plate, idReg])
 
         }
 
+    }
+
+    async function regExists(reg){
+        console.log(reg)
+        var regExist = await pool.query(`select id from registrations where reg_number= $1`, [reg])
+         if(regExist.rowCount > 0){
+             return true;
+         }
+         return false
     }
 
 
@@ -45,7 +52,8 @@ module.exports = function regFactory(pool) {
         addRegNumber,
         getList,
         regFilter,
-        reset
+        reset,
+        regExists
 
     }
 }

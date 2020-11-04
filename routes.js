@@ -1,3 +1,5 @@
+const { restart } = require("nodemon");
+
 module.exports = function CategoryRoutes(regNo) {
 
     function welcomeFlash(req, res) {
@@ -51,11 +53,17 @@ module.exports = function CategoryRoutes(regNo) {
         let regN = req.body.regNumbers;
         let plate = regN.toUpperCase()
         let errors = ""
-      
-        if (!plate) {
+      let list = await regNo.regExists(plate)
+
+      if(list) {
+        errors = 'this reg exist'
+      }
+     
+         else if(!plate) {
+         
           errors = 'Please enter a registration number'
         }
-      
+        
         else if (!(/C[AYJ]\s\d{3,6}\D\d{3,9}|C[AYJ]\s\d{3,6}/gi.test(plate))) {
           errors = 'invalid registration number'
         }
@@ -72,7 +80,7 @@ module.exports = function CategoryRoutes(regNo) {
         }
       
         else {
-      
+      console.log(await regNo.getList())
           res.render('index', {
             regNumber: await regNo.getList()
       

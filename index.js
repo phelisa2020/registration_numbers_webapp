@@ -57,7 +57,7 @@ app.get("/deleteDb", reg.clear);
 app.post("/registration", reg.addingPlate);
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3090;
 app.listen(PORT, function () {
   console.log('App started at port:', PORT);
 })
