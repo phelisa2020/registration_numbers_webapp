@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const session = require('express-session');
 const regFactory = require("./registration");
+const routesFac = require("./routes");
 
 const pg = require("pg");
 const Pool = pg.Pool;
@@ -21,6 +22,9 @@ const pool = new Pool({
 
 let app = express();
 const regNo = regFactory(pool);
+const reg = routesFac(regNo)
+
+
 
 app.engine('handlebars', exphbs({ layoutsDir: './views/layouts' }));
 app.set('view engine', 'handlebars');
@@ -39,82 +43,18 @@ app.use(session({
 // initialise the flash middleware
 app.use(flash());
 
-app.get('/', function (req, res) {
-  req.flash('info', 'Welcome now');
-  res.render('index')
-});
-app.get('/addFlash', function (req, res) {
-  req.flash('info', 'Flash Message Added');
-  res.redirect('/');
-});
+app.get('/', reg.welcomeFlash);
 
-app.get("/", async function (req, res) {
-  res.render('index', {
-    registrations: await regNo.getList()
-  });
-});
+app.get('/addFlash', reg.addedFlash);
 
-app.get("/registration", async function (req, res) {
-  const town = req.query.town
-  
-  let errors = ""
-  if (!town) {
-    errors = 'Please select a town'
-  }
+app.get("/", reg.listReg);
 
-  if (errors) {
-    req.flash("error", errors),
-      res.render("index")
-  }
+app.get("/registration", reg.filtering);
 
-  else {
-
-    res.render('index', {
-      regNumber: await regNo.regFilter(town),
-
-    });
-  }
-});
-
-app.get("/deleteDb", async function (req, res) {
-  try {
-    await regNo.reset();
-  } catch (err) { }
-  res.redirect('/');
-});
+app.get("/deleteDb", reg.clear);
 
 
-app.post("/registration", async function (req, res) {
-
-  let regN = req.body.regNumbers;
-  let plate = regN.toUpperCase()
-  let errors = ""
-
-  if (!plate) {
-    errors = 'Please enter a reg number'
-  }
-
-  else if (!(/C[AYJ]\s\d{3,6}\D\d{3,9}|C[AYJ]\s\d{3,6}/gi.test(plate))) {
-    errors = 'invalid reg number'
-  }
-
-  else {
-    await regNo.addRegNumber(regN);
-  }
-  if (errors) {
-    req.flash("error", errors),
-      res.render("index")
-  }
-
-  else {
-
-    res.render('index', {
-      regNumber: await regNo.getList()
-
-
-    });
-  }
-})
+app.post("/registration", reg.addingPlate);
 
 
 const PORT = process.env.PORT || 3000;
