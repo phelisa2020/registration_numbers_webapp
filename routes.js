@@ -1,105 +1,92 @@
-const { restart } = require("nodemon");
-
 module.exports = function CategoryRoutes(regNo) {
 
-    function welcomeFlash(req, res) {
-        req.flash('info', 'Welcome now');
-        res.render('index')
-      };
+  function welcomeFlash(req, res) {
+    req.flash('info', 'Welcome now');
+    res.render('index')
+  };
 
-     function addedFlash (req, res) {
-        req.flash('info', 'Flash Message Added');
-        res.redirect('index')
-     };
-     
-      async function listReg(req, res) {
-        res.render('index', {
-    
-            registrations: await regNo.getList()
-    
-        })
-      }
-      async function filtering(req, res) {
-        const town = req.query.town
-        
-        let errors = ""
-        if (!town) {
-          errors = 'Please select a town'
-        }
-      
-        if (errors) {
-          req.flash("error", errors),
-            res.render("index")
-        }
-      
-        else {
-      
-          res.render('index', {
-            regNumber: await regNo.regFilter(town),
-      
-          });
-        }
-      }
+  function addedFlash(req, res) {
+    req.flash('info', 'Flash Message Added');
+    res.redirect('index')
+  };
 
-      async function clear(req, res) {
-        try {
-          await regNo.reset();
-        } catch (err) { }
-        res.redirect('/');
-      }
+  async function listReg(req, res) {
+    res.render('index', {
 
-      async function addingPlate(req, res) {
+      registrations: await regNo.getList()
 
-        let regN = req.body.regNumbers;
-        let plate = regN.toUpperCase()
-        let errors = ""
-      let list = await regNo.regExists(plate)
+    })
+  }
+  async function filtering(req, res) {
+    const town = req.query.town
 
-      if(list) {
-        errors = 'this reg exist'
-      }
-     
-         else if(!plate) {
-         
-          errors = 'Please enter a registration number'
-        }
-        
-        else if (!(/C[AYJ]\s\d{3,6}\D\d{3,9}|C[AYJ]\s\d{3,6}/gi.test(plate))) {
-          errors = 'invalid registration number'
-        }
-        
-      
-      
-        else {
-          
-          await regNo.addRegNumber(regN);
-        }
-        if (errors) {
-          req.flash("error", errors),
-            res.render("index")
-        }
-      
-        else {
+    let errors = ""
+    if (!town) {
+      errors = 'Please select a town'
+    }
+
+    if (errors) {
+      req.flash("error", errors),
+        res.render("index")
+    }
+
+    else {
+      res.render('index', {
+        regNumber: await regNo.regFilter(town),
+
+      });
+    }
+  }
+
+  async function clear(req, res) {
+    try {
+      await regNo.reset();
+    } catch (err) { }
+    res.redirect('/');
+  }
+
+  async function addingPlate(req, res) {
+
+    let regN = req.body.regNumbers;
+    let plate = regN.toUpperCase()
+    let errors = ""
+
+    if (!plate) {
+
+      errors = 'Please enter a registration number'
+    }
+
+    else if (!(/C[AYJ]\s\d{3,6}\D\d{3,9}|C[AYJ]\s\d{3,6}/gi.test(plate))) {
+      errors = 'invalid registration number'
+    }
+    else {
+
+      var error = await regNo.addRegNumber(regN);
+    }
+    if (errors) {
+      req.flash("error", errors),
+        res.render("index")
+    }
+
+    else {
       console.log(await regNo.getList())
-          res.render('index', {
-            regNumber: await regNo.getList()
-      
-      
-          });
-        }
-      }
-      
+      req.flash("error", error),
+        res.render('index', {
+          regNumber: await regNo.getList()
 
 
-return{
+        });
+    }
+  }
+
+
+
+  return {
     welcomeFlash,
     addedFlash,
     listReg,
     filtering,
     clear,
     addingPlate
-
-
-
-}
+  }
 }

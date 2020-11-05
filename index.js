@@ -24,8 +24,6 @@ let app = express();
 const regNo = regFactory(pool);
 const reg = routesFac(regNo)
 
-
-
 app.engine('handlebars', exphbs({ layoutsDir: './views/layouts' }));
 app.set('view engine', 'handlebars');
 
@@ -53,9 +51,7 @@ app.get("/registration", reg.filtering);
 
 app.get("/deleteDb", reg.clear);
 
-
 app.post("/registration", reg.addingPlate);
-
 
 const PORT = process.env.PORT || 3090;
 app.listen(PORT, function () {

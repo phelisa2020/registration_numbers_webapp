@@ -46,7 +46,6 @@ describe("The Registration function", function () {
     });
 
     
- 
     it("Should be able to add 2 registration numbers in the database without repeating the same reg number", async function () {
         var regNo = registrations(pool);
 
@@ -96,13 +95,6 @@ describe("The Registration function", function () {
         const allReg = await regNo.getList()
 
         assert.deepStrictEqual([], allReg);
-    });
-
-    
-    
-  
-   
-  
-   
+    });   
 
 })
